@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Lattice Enhancements",
+  "description": "Adds features on top of lattice",
+  "version": "1.0",
+  "icons": {
+    "48": "images/icon-48.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/content.js"
+      ],
+      "matches": [
+        "https://*.latticehq.com/goals/explore*"
+      ]
+    }
+  ]
+}
