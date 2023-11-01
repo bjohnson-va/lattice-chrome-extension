@@ -6,6 +6,10 @@ function getTodayAsPercentageOfQuarter() {
     const quarterStartDate = new Date(now.getFullYear(), quarterStartMonth - 3, 1);
     const quarterEndDate = new Date(now.getFullYear(), quarterStartMonth, 0);
 
+    if (now.getMonth() > 8) {
+        quarterEndDate.setDate(15); // December is always a wash
+    }
+
     const totalQuarterDays = (quarterEndDate - quarterStartDate) / (1000 * 60 * 60 * 24); // Total days in the current quarter
     const daysPassedInQuarter = (now - quarterStartDate) / (1000 * 60 * 60 * 24); // Days passed in the current quarter
 
