@@ -24,6 +24,7 @@ function addQBar(goals) {
     qBar.style.height = "16px";
     qBar.style.background = "blue";
     const wrapper = document.createElement("div");
+    wrapper.classList.add('extensionbar')
     wrapper.style.width = "100%";
     wrapper.style.border = "1px solid black";
     wrapper.append(qBar);
@@ -61,22 +62,47 @@ function addGBar(goals) {
     qBar.style.background = "green";
 
     const wrapper = document.createElement("div");
+    wrapper.classList.add('extensionbar')
     wrapper.style.width = "100%";
     wrapper.style.border = "1px solid black";
     wrapper.append(qBar);
     goals[0].parentNode.parentNode.prepend(wrapper);
 }
 
+function removeBars() {
+    const oz = document.getElementsByClassName('extensionbar')
+    Array.from(oz).forEach(v => v.remove());
+}
+
+function addBars() {
+    let goals = document.querySelectorAll(
+        "li[data-cy='goal-entry']"
+    );
+    addQBar(goals);
+    addGBar(goals);
+    return goals.length > 0;
+}
+
 setInterval(() => {
     if (found) {
         return;
     }
-    let goals = document.querySelectorAll(
-        "li[data-cy='goal-entry']"
-    );
-    found = goals.length > 0;
     setTimeout(() => {
-        addQBar(goals);
-        addGBar(goals);
+        found = addBars();
     })
+    setTimeout(
+        () => {
+            const el = document.createElement('button');
+            el.textContent = 'Refresh bars'
+            el.style.position = 'absolute';
+            // put the button in the bottom left corner of the screen, 100 pixels from the left
+            el.style.left = '250px';
+            el.style.bottom = '10px';
+            el.onclick = () => {
+                removeBars();
+                addBars();
+            }
+            document.body.append(el);
+        }
+    )
 }, 1000);
